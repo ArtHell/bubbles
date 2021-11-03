@@ -13,8 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
     height: '50px',
     borderRadius: '50%',
     opacity: '80%',
-    boxShadow: '5px 5px  rgba(0,0,0,0.1 )',
-    border: '1px solid'
+    boxShadow: '5px 5px  rgba(0,0,0,0.1 )'
 }));
 
 const Background = styled(Paper)(({ theme }) => ({
@@ -42,16 +41,18 @@ interface GridItem {
 const ColoredItem = (props: { mouseDown: boolean, playBubble: any }) => {
     
     const [color, setColor] = useState(`#${getPaletteColor()}`);
+    const [otherColor, setOtherColor] = useState(`#${getPaletteColor()}`);
     const changeColor = () => {
         if (props.mouseDown) {
             props.playBubble();
             setColor(`#${getPaletteColor()}`);
+            setOtherColor(`#${getPaletteColor()}`);
         }
     }
 
 
 
-    return <Item style={{ backgroundColor: color }} onMouseEnter={changeColor}></Item>
+    return <Item style={{ background: `radial-gradient(circle at 50px 50px, ${color}, ${otherColor})`, border: `1px solid ${otherColor}` }} onMouseEnter={changeColor}></Item>
 }
 
 const ColoredGrid = () => {
