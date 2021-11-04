@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Grid, Paper, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
-import { getPaletteColor, getRandomColor } from '../../helpers/colorHelper';
+import { getPaletteColor, getRandomColor, getRandomNumber } from '../../helpers/colorHelper';
 import bubble from '../../sounds/bubble.mp3';
 import background from '../../images/background.jfif';
 import piano from '../../sounds/piano.mp3';
@@ -44,7 +44,9 @@ const ColoredItem = (props: { mouseDown: boolean, playBubble: any }) => {
     const [otherColor, setOtherColor] = useState(`#${getPaletteColor()}`);
     const changeColor = () => {
         if (props.mouseDown) {
-            props.playBubble();
+            props.playBubble({
+                playbackRate:  1 - 0.4 + getRandomNumber()*0.1
+            });
             setColor(`#${getPaletteColor()}`);
             setOtherColor(`#${getPaletteColor()}`);
         }
@@ -61,8 +63,9 @@ const ColoredGrid = () => {
     const [playMusic] = useSound(piano, {
         loop: true,
         autoplay: true,
-        volume: 0.7
+        volume: 0.7,
     });
+
     const [playBubble] = useSound(bubble, { volume: 0.3 });
 
     return <Background onMouseDown={(event) => { event.preventDefault(); setMouseDown(true) }} onMouseUp={(event) => { event.preventDefault(); setMouseDown(false) }}>
